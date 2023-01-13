@@ -9,12 +9,12 @@ You can download a Caddy build with this plugin inside directly from the [offici
 
 If you prefer, you can build Caddy by yourself by [installing xcaddy](https://github.com/caddyserver/xcaddy) and running:
 ```
-xcaddy build --with github.com/porech/caddy-maxmind-geolocation
+xcaddy build --with github.com/lum8rjack/caddy-maxmind-geolocation
 ```
 
 ## Requirements 
 
-To be able to use this module you will need to have a Maxmind GeoLite2 database, that can be downloaded for free
+To be able to use this module you will need to have a MaxMind GeoLite2 database, that can be downloaded for free
 by creating an account. More information about this are available on the
 [official website](https://dev.maxmind.com/geoip/geoip2/geolite2/).
 
@@ -22,7 +22,7 @@ You will specifically need the `GeoLite2-Country.mmdb` file, or the `GeoLite2-Ci
 
 ## Usage
 
-You can use this module as a matcher to blacklist or whitelist a set of countries, subdivisions or metro codes. 
+You can use this module as a matcher to allow or deny a set of countries, subdivisions or metro codes. 
 
 You'll find the detailed explanation of all the fields on the [Caddy website's plugin page](https://caddyserver.com/docs/modules/http.matchers.maxmind_geolocation).
 
