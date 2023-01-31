@@ -154,7 +154,7 @@ func (m *MaxmindGeolocation) Provision(ctx caddy.Context) error {
 		return fmt.Errorf("cannot open database file %s: %v", m.DbPath, err)
 	}
 
-	m.logger.Debug("provisioned", zap.String("maxmind_db", m.DbPath), zap.Int("allowed_countries", len(m.AllowCountries)), zap.Int("allowed_subdivisions", len(m.AllowSubdivisions)), zap.Int("allowed_metro_codes", len(m.AllowMetroCodes)), zap.Int("denied_countries", len(m.DenyCountries)), zap.Int("denied_subdivisions", len(m.DenySubdivisions)), zap.Int("denied_metro_codes", len(m.DenyMetroCodes)))
+	m.logger.Info("provisioned", zap.String("maxmind_db", m.DbPath), zap.Int("allowed_countries", len(m.AllowCountries)), zap.Int("allowed_subdivisions", len(m.AllowSubdivisions)), zap.Int("allowed_metro_codes", len(m.AllowMetroCodes)), zap.Int("denied_countries", len(m.DenyCountries)), zap.Int("denied_subdivisions", len(m.DenySubdivisions)), zap.Int("denied_metro_codes", len(m.DenyMetroCodes)))
 
 	return nil
 }
