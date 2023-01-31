@@ -5,9 +5,7 @@ middleware.
 
 ## Installation
 
-You can download a Caddy build with this plugin inside directly from the [official Caddy page](https://caddyserver.com/download).
-
-If you prefer, you can build Caddy by yourself by [installing xcaddy](https://github.com/caddyserver/xcaddy) and running:
+You can build Caddy by yourself by [installing xcaddy](https://github.com/caddyserver/xcaddy) and running:
 ```
 xcaddy build --with github.com/lum8rjack/caddy-maxmind-geolocation
 ```

@@ -153,6 +153,9 @@ func (m *MaxmindGeolocation) Provision(ctx caddy.Context) error {
 	if err != nil {
 		return fmt.Errorf("cannot open database file %s: %v", m.DbPath, err)
 	}
+
+	m.logger.Debug("provisioned", zap.String("maxmind_db", m.DbPath), zap.Int("allowed_countries", len(m.AllowCountries)), zap.Int("allowed_subdivisions", len(m.AllowSubdivisions)), zap.Int("allowed_metro_codes", len(m.AllowMetroCodes)), zap.Int("denied_countries", len(m.DenyCountries)), zap.Int("denied_subdivisions", len(m.DenySubdivisions)), zap.Int("denied_metro_codes", len(m.DenyMetroCodes)))
+
 	return nil
 }
 
@@ -211,7 +214,7 @@ func (m *MaxmindGeolocation) Match(r *http.Request) bool {
 	}
 
 	m.logger.Debug(
-		"Detected MaxMind data",
+		"detected MaxMind data",
 		zap.String("ip", r.RemoteAddr),
 		zap.String("country", record.Country.ISOCode),
 		zap.String("subdivisions", record.Subdivisions.CommaSeparatedISOCodes()),
@@ -219,26 +222,26 @@ func (m *MaxmindGeolocation) Match(r *http.Request) bool {
 	)
 
 	if !m.checkAllowed(record.Country.ISOCode, m.AllowCountries, m.DenyCountries) {
-		m.logger.Debug("Country not allowed", zap.String("country", record.Country.ISOCode))
+		m.logger.Debug("country not allowed", zap.String("country", record.Country.ISOCode))
 		return false
 	}
 
 	if len(record.Subdivisions) > 0 {
 		for _, subdivision := range record.Subdivisions {
 			if !m.checkAllowed(subdivision.ISOCode, m.AllowSubdivisions, m.DenySubdivisions) {
-				m.logger.Debug("Subdivision not allowed", zap.String("subdivision", subdivision.ISOCode))
+				m.logger.Debug("subdivision not allowed", zap.String("subdivision", subdivision.ISOCode))
 				return false
 			}
 		}
 	} else {
 		if !m.checkAllowed("", m.AllowSubdivisions, m.DenySubdivisions) {
-			m.logger.Debug("Subdivision not allowed", zap.String("subdivision", ""))
+			m.logger.Debug("subdivision not allowed", zap.String("subdivision", ""))
 			return false
 		}
 	}
 
 	if !m.checkAllowed(strconv.Itoa(record.Location.MetroCode), m.AllowMetroCodes, m.DenyMetroCodes) {
-		m.logger.Debug("Metro code not allowed", zap.Int("metro_code", record.Location.MetroCode))
+		m.logger.Debug("metro code not allowed", zap.Int("metro_code", record.Location.MetroCode))
 		return false
 	}
 
